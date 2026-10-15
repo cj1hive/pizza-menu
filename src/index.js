@@ -86,14 +86,15 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  if (pizzaObj.soldOut) return null;
   return (
     <li className="pizza">
       <div>
-        <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -108,12 +109,7 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>
-            we are opened from {openhours}:00 until {closeHours}:00
-          </p>
-          <button className="btn">Order</button>
-        </div>
+        <Order closeHours={closeHours} />
       ) : (
         <p>
           we are happy to welcome you between {openhours}:00 untill {closeHours}
@@ -123,7 +119,14 @@ function Footer() {
     </footer>
   );
 }
-
+function Order({ closeHours }) {
+  return (
+    <div className="order">
+      <p>we are opened untill {closeHours}:00</p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
